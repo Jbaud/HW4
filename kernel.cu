@@ -1,4 +1,4 @@
-#include "kernels.cuh"
+#include "kernel.cuh"
 
 __global__ void norm (float *d_Input, float *d_Output, int n) {
     int col = blockIdx.x * blockDim.x + threadIdx.x;

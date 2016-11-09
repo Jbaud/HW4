@@ -161,6 +161,28 @@ int main(int argc, char **argv) {
 	usecstart = (unsigned long long)etstart.tv_sec * 1000000 + etstart.tv_usec;
 	usecstop = (unsigned long long)etstop.tv_sec * 1000000 + etstop.tv_usec;
 
+	printf("Elapsed time in sequential algorithm\n");
+	printf("\nElapsed time = %g ms.\n",
+			(float)(usecstop - usecstart)/(float)1000);
+
+	printf("(CPU times are accurate to the nearest %g ms)\n",
+			1.0/(float)CLOCKS_PER_SEC * 1000.0);
+	printf("My total CPU time for parent = %g ms.\n",
+			(float)( (cputstop.tms_utime + cputstop.tms_stime) -
+				(cputstart.tms_utime + cputstart.tms_stime) ) /
+			(float)CLOCKS_PER_SEC * 1000);
+	printf("My system CPU time for parent = %g ms.\n",
+			(float)(cputstop.tms_stime - cputstart.tms_stime) /
+			(float)CLOCKS_PER_SEC * 1000);
+	printf("My total CPU time for child processes = %g ms.\n",
+			(float)( (cputstop.tms_cutime + cputstop.tms_cstime) -
+				(cputstart.tms_cutime + cputstart.tms_cstime) ) /
+			(float)CLOCKS_PER_SEC * 1000);
+	/* Contrary to the man pages, this appears not to include t
+	he parent */
+	printf("--------------------------------------------\n");
+	exit(0);
+
 
 	/* Display output */
 	print_B();

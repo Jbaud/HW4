@@ -8,7 +8,7 @@ execname= main
 $(execname): $(objects)
 	$(NVCC)  -o $(execname) $(objects) 
 kernel.o: kernel.cu
-	$(NVCC)  -c kernels.cu
+	$(NVCC)  -c kernel.cu
 main.o: main.cu
 	$(NVCC)  -c main.cu
 

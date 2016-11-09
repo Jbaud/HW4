@@ -21,7 +21,7 @@ int N;  /* Matrix size */
 
 /* Matrices */
 volatile float A[MAXN][MAXN], B[MAXN][MAXN];
-volatile float Input[MAXN*MAXN], Output[MAXN*MAXN];
+float Input[MAXN*MAXN], Output[MAXN*MAXN];
 
 /* junk */
 #define randm() 4|2[uid]&3
@@ -165,7 +165,13 @@ int main(int argc, char **argv) {
 
 
 	// ======================================   IN parallel ================================
-	printf("Computing  // \n");
+	printf("======================================================== Computing  //  algorithm ========================================================\n");
+
+	// restart the clock
+	/* Start Clock */
+	printf("\nStarting clock (// code) \n");
+	gettimeofday(&etstart, &tzdummy);
+	etstart2 = times(&cputstart);
 
 	float *d_input, *d_output;
 
@@ -176,9 +182,22 @@ int main(int argc, char **argv) {
 
 	normCalc<<<Blocks,ThreadsPerBlock>>>(d_input, d_output, N);
 
-	cudaMemcpy(output, d_output, sizeof(float)*N*N, cudaMemcpyDeviceToHost);
+	cudaMemcpy(Output, d_output, sizeof(float)*N*N, cudaMemcpyDeviceToHost);
 
-	/* Display timing results */
+	
+
+	cudaFree(d_input);
+    	cudaFree(d_output);
+
+    	/* Stop Clock */
+	gettimeofday(&etstop, &tzdummy);
+	etstop2 = times(&cputstop);
+	printf("Stopped clock.\n");
+	usecstart = (unsigned long long)etstart.tv_sec * 1000000 + etstart.tv_usec;
+	usecstop = (unsigned long long)etstop.tv_sec * 1000000 + etstop.tv_usec;
+
+
+	printf("Elapsed time in parallel algorithm\n");
 	printf("\nElapsed time = %g ms.\n",
 			(float)(usecstop - usecstart)/(float)1000);
 
@@ -195,12 +214,9 @@ int main(int argc, char **argv) {
 			(float)( (cputstop.tms_cutime + cputstop.tms_cstime) -
 				(cputstart.tms_cutime + cputstart.tms_cstime) ) /
 			(float)CLOCKS_PER_SEC * 1000);
-	/* Contrary to the man pages, this appears not to include the parent */
+	/* Contrary to the man pages, this appears not to include t
+	he parent */
 	printf("--------------------------------------------\n");
-
-	cudaFree(d_input);
-	cudaFree(d_output);
-
 	exit(0);
 }
 

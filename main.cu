@@ -167,7 +167,7 @@ int main(int argc, char **argv) {
 
 
 	// ======================================   IN parallel ================================
-	printf("======================================================== Computing  //  algorithm ========================================================\n");
+	printf("========= Computing  //  algorithm =========   \n");
 
 	// restart the clock
 	/* Start Clock */

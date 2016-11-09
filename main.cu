@@ -178,10 +178,6 @@ int main(int argc, char **argv) {
 			(float)( (cputstop.tms_cutime + cputstop.tms_cstime) -
 				(cputstart.tms_cutime + cputstart.tms_cstime) ) /
 			(float)CLOCKS_PER_SEC * 1000);
-	/* Contrary to the man pages, this appears not to include t
-	he parent */
-	printf("--------------------------------------------\n");
-	exit(0);
 
 
 	/* Display output */

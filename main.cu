@@ -135,6 +135,7 @@ int main(int argc, char **argv) {
 	clock_t etstart2, etstop2;  /* Elapsed times using times() */
 	unsigned long long usecstart, usecstop;
 	struct tms cputstart, cputstop;  /* CPU times for my processes */
+	float time_for_seq, time_for_par;
 
 	/* Process program parameters */
 	parameters(argc, argv);
@@ -164,6 +165,8 @@ int main(int argc, char **argv) {
 	printf("Elapsed time in sequential algorithm\n");
 	printf("\nElapsed time = %g ms.\n",
 			(float)(usecstop - usecstart)/(float)1000);
+
+	time_for_seq=(float)(usecstop - usecstart)/(float)1000;
 
 	printf("(CPU times are accurate to the nearest %g ms)\n",
 			1.0/(float)CLOCKS_PER_SEC * 1000.0);
@@ -221,8 +224,11 @@ int main(int argc, char **argv) {
 	printf("\nElapsed time = %g ms.\n",
 			(float)(usecstop - usecstart)/(float)1000);
 
+	time_for_par=(float)(usecstop - usecstart)/(float)1000;
+
 	printf("(CPU times are accurate to the nearest %g ms)\n",
 			1.0/(float)CLOCKS_PER_SEC * 1000.0);
+	
 	printf("My total CPU time for parent = %g ms.\n",
 			(float)( (cputstop.tms_utime + cputstop.tms_stime) -
 				(cputstart.tms_utime + cputstart.tms_stime) ) /
@@ -237,6 +243,10 @@ int main(int argc, char **argv) {
 	/* Contrary to the man pages, this appears not to include t
 	he parent */
 	printf("--------------------------------------------\n");
+
+	const float ratio = (100.f * time_for_seq) / time_for_par;
+
+	printf("Speedup :  %f %% \n",ratio);
 	exit(0);
 }
 

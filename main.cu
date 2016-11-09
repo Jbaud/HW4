@@ -15,6 +15,8 @@
 #include <sys/time.h>
 #include <time.h>
 
+#include "kernel.cuh"
+
 /* Program Parameters */
 #define MAXN 8000  /* Max value of N */
 int N;  /* Matrix size */
@@ -180,7 +182,7 @@ int main(int argc, char **argv) {
 
 	cudaMemcpy(d_input, Input, sizeof(float)*N*N, cudaMemcpyHostToDevice);
 
-	normCalc<<<Blocks,ThreadsPerBlock>>>(d_input, d_output, N);
+	norm<<<Blocks,ThreadsPerBlock>>>(d_input, d_output, N);
 
 	cudaMemcpy(Output, d_output, sizeof(float)*N*N, cudaMemcpyDeviceToHost);
 

@@ -18,7 +18,7 @@
 #include "kernel.cuh"
 
 /* Program Parameters */
-#define MAXN 16000  /* Max value of N */
+#define MAXN 8000  /* Max value of N */
 int N;  /* Matrix size */
 
 /* Matrices */
